@@ -2,23 +2,21 @@ import tweepy
 import pandas as pd
 import csv
 import json
+import config
+
 
 # Replace your bearer token below
 # client = Twarc2(bearer_token="XXXXX")
-consumer_key = "BLUeTUU66lIhF8yAtP7cxZBdd"
-consumer_secret = "0fUUcxBM6PyVforfMP0cxAEMRw7X8vhaRL5QsOFYlLhtNtBEL3" 
-access_key = "BLUeTUU66lIhF8yAtP7cxZBdd"
-access_secret = "0fUUcxBM6PyVforfMP0cxAEMRw7X8vhaRL5QsOFYlLhtNtBEL3"
-bearer_token = "AAAAAAAAAAAAAAAAAAAAAA%2BilgEAAAAAaOslXG%2BGux0Qn0QsnGQaQ3D1x2M%3DHDZ7DUgsk2Iw5SXUqZ6hnBzMbiFdIHpAr2NRWBvLNIpLB5iK5U"
+
 # Twitter authentication
 # auth = tweepy.OAuthHandler(consumer_key, consumer_secret)   
 # auth.set_access_token(access_key, access_secret) 
-auth = tweepy.OAuth2BearerHandler(bearer_token)
+# auth = tweepy.OAuth2BearerHandler(bearer_token)
 
   
 # Creating an API object 
-api = tweepy.API(auth)
-client = tweepy.Client(bearer_token='AAAAAAAAAAAAAAAAAAAAAA%2BilgEAAAAAaOslXG%2BGux0Qn0QsnGQaQ3D1x2M%3DHDZ7DUgsk2Iw5SXUqZ6hnBzMbiFdIHpAr2NRWBvLNIpLB5iK5U')
+# api = tweepy.API(auth)
+client = tweepy.Client(bearer_token=config.bearer_token)
 
 
 
