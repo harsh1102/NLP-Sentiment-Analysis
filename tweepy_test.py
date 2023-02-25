@@ -33,7 +33,6 @@ def test_dataset_genration():
     query = 'FastAndFurious lang:en'
     # query = 'Dhoni lang:en'
     i = 0
-    # with open(file_name, 'a+', encoding="utf-8") as filehandle:
     for tweet in tweepy.Paginator(client.search_recent_tweets, query=query, 
                                   tweet_fields=['context_annotations', 'created_at'], max_results=10).flatten(limit=1):
         i = i +1
@@ -51,21 +50,18 @@ def test_dataset_genration():
         stopwords_removed = stopwords_remove(punctuationfree_text)
         print(stopwords_removed)
 
-        # file_name = "tweets_"+str(i)+".txt"
-        # File_object = open(file_name, "a+", encoding="utf-8")
-        # File_object.write('%s\n' % tweet.text)
+        file_name = "tweets_"+str(i)+".txt"
+        File_object = open(file_name, "a+", encoding="utf-8")
+        File_object.write('%s\n' % tweet.text)
 
 def reading_dataset():
-    path = 'E:\MS_CS_UTA\Spring 2023\ML\Project\deepLearning\dataset'
+    cwd = os.getcwd()
+    path = cwd+'\dataset'
     dir_list = os.listdir(path)
-    print("Files and directories in '", path, "' :")
-    print(dir_list)
 
     for i in dir_list:
-        print(i)
         with open(i) as f:
             lines = f.readlines()
-        print(lines)
         print("------------Original Text --------------------")
         print(lines[0])
         print("------------After text cleaning---------------")
