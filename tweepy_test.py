@@ -29,15 +29,11 @@ def main():
         reading_dataset()
 
 def test_dataset_genration():
-     # query = '#SidKiaraWedding -is:retweet lang:en'
     query = 'FastAndFurious lang:en'
-    # query = 'Dhoni lang:en'
     i = 0
     for tweet in tweepy.Paginator(client.search_recent_tweets, query=query, 
                                   tweet_fields=['context_annotations', 'created_at'], max_results=10).flatten(limit=1):
         i = i +1
-        # test_text = '''RT @SushantNMehta: If MS Dhoni wins #IPL2023 would he go down in history as the best cricketing mind of all time? 
-#MSDhoni #SushantMehta'''
         print("------------Original Text --------------------")
         print(tweet.text)
         print("------------After text cleaning---------------")
@@ -58,21 +54,22 @@ def reading_dataset():
     cwd = os.getcwd()
     path = cwd+'\dataset'
     dir_list = os.listdir(path)
-
+    print(dir_list)
     for i in dir_list:
-        with open(i) as f:
+        with open('dataset\/'+i) as f:
+            print ("\n\n***********For file "+i)
             lines = f.readlines()
-        print("------------Original Text --------------------")
-        print(lines[0])
-        print("------------After text cleaning---------------")
-        cleaned_text = text_cleaning(lines[0])
-        print(cleaned_text)
-        print("----------After removing punctuation-----------")
-        punctuationfree_text = punctuation_remove(cleaned_text)
-        print(punctuationfree_text)
-        print("---------After removing stopwords--------------")
-        stopwords_removed = stopwords_remove(punctuationfree_text)
-        print(stopwords_removed)
+            print("------------Original Text --------------------")
+            print(lines[0])
+            print("------------After text cleaning---------------")
+            cleaned_text = text_cleaning(lines[0])
+            print(cleaned_text)
+            print("----------After removing punctuation-----------")
+            punctuationfree_text = punctuation_remove(cleaned_text)
+            print(punctuationfree_text)
+            print("---------After removing stopwords--------------")
+            stopwords_removed = stopwords_remove(punctuationfree_text)
+            print(stopwords_removed)
 
 def punctuation_remove(row_text):
     punctuationfree="".join([i for i in row_text if i not in string.punctuation])
