@@ -6,6 +6,8 @@ from nltk.tokenize import word_tokenize
 import string
 string.punctuation
 import preprocessor as prep
+import os
+import sys
 
 # Twitter authentication 
 auth = tweepy.OAuth2BearerHandler(bearer_token=config.bearer_token)
@@ -19,10 +21,15 @@ client = tweepy.Client(bearer_token=config.bearer_token)
 # nltk.download('punkt')
 stop_words = set(stopwords.words('english'))
 
-
-
 def main():
-    # query = '#SidKiaraWedding -is:retweet lang:en'
+    dataset = sys.argv[1]
+    if dataset == 'test':
+        test_dataset_genration()
+    elif dataset == 'training':
+        reading_dataset()
+
+def test_dataset_genration():
+     # query = '#SidKiaraWedding -is:retweet lang:en'
     query = 'FastAndFurious lang:en'
     # query = 'Dhoni lang:en'
     i = 0
@@ -48,6 +55,28 @@ def main():
         # File_object = open(file_name, "a+", encoding="utf-8")
         # File_object.write('%s\n' % tweet.text)
 
+def reading_dataset():
+    path = 'E:\MS_CS_UTA\Spring 2023\ML\Project\deepLearning\dataset'
+    dir_list = os.listdir(path)
+    print("Files and directories in '", path, "' :")
+    print(dir_list)
+
+    for i in dir_list:
+        print(i)
+        with open(i) as f:
+            lines = f.readlines()
+        print(lines)
+        print("------------Original Text --------------------")
+        print(lines[0])
+        print("------------After text cleaning---------------")
+        cleaned_text = text_cleaning(lines[0])
+        print(cleaned_text)
+        print("----------After removing punctuation-----------")
+        punctuationfree_text = punctuation_remove(cleaned_text)
+        print(punctuationfree_text)
+        print("---------After removing stopwords--------------")
+        stopwords_removed = stopwords_remove(punctuationfree_text)
+        print(stopwords_removed)
 
 def punctuation_remove(row_text):
     punctuationfree="".join([i for i in row_text if i not in string.punctuation])
