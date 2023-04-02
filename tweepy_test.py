@@ -32,7 +32,7 @@ def test_dataset_genration():
     query = 'FastAndFurious lang:en'
     i = 0
     for tweet in tweepy.Paginator(client.search_recent_tweets, query=query, 
-                                  tweet_fields=['context_annotations', 'created_at'], max_results=10).flatten(limit=1):
+                                  tweet_fields=['context_annotations', 'created_at'], max_results=10).flatten(limit=10):
         i = i +1
         print("------------Original Text --------------------")
         print(tweet.text)
