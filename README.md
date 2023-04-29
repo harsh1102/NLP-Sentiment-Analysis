@@ -12,11 +12,11 @@ Analyzed the model using accuracy and loss as the measurements. Also observed th
 
 ##Result Plots for LSTM (Model Loss)
 
-![image](https://user-images.githubusercontent.com/41270424/235325733-c483c921-6f16-44b4-ab6f-578e38533d69.png)
+![image](https://user-images.githubusercontent.com/41270424/235325843-aeecd1c6-8de8-4188-992d-3b3382b36728.png)
 
 ##Result Plots for LSTM (Model Accuracy)
 
-![image](https://user-images.githubusercontent.com/41270424/235325747-15793e5f-7475-4a2c-8664-02dfd90f87e6.png)
+![image](https://user-images.githubusercontent.com/41270424/235325851-21ecbe9f-ab07-4b1a-9fab-e500853d2a74.png)
 
 ##What is different from our reference papers
 
