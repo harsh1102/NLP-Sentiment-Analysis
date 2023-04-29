@@ -80,8 +80,12 @@ pd.options.display.max_colwidth = 1000
 pd.options.display.max_rows  = 100
 pd.set_option("display.min_rows", 200)
 
-train = pd.read_csv("test_csv.csv",encoding='latin-1')
+train = pd.read_csv("full-corpus.csv",encoding='latin-1')
 train_data = train[["tweet","status"]]
+
+test = pd.read_csv("live_data.csv",encoding='latin-1')
+test_data = train[["tweet","status"]]
+
 
 # print(train_data.head(10))
 print(train_data.shape)
@@ -91,6 +95,7 @@ print("Total number of Labels : {}".format(len(train_data.status.unique())))
 
 stop_words = stopwords.words('english')
 train_data["tweet"]  = train_data['tweet'].apply(lambda x:x.lower())
+test_data["tweet"]  = test_data['tweet'].apply(lambda x:x.lower())
 
 
 def clean_data(text):
@@ -107,18 +112,28 @@ def clean_data(text):
     return text
 
 train_data["tweet"] = train_data['tweet'].apply(lambda x : clean_data(x))
+test_data["tweet"] = test_data['tweet'].apply(lambda x : clean_data(x))
+
 
 train_data['status'].unique()
 l = dict()
 for idx,lbl in enumerate(train_data['status'].unique()):
     l[lbl] = idx 
+
+test_data['status'].unique()
+l = dict()
+for idx,lbl in enumerate(test_data['status'].unique()):
+    l[lbl] = idx
     
 train_data['status'] = train_data['status'].map(l)
+test_data['status'] = test_data['status'].map(l)
+
 
 # max_len = np.max(train_data['tweet'].apply(lambda x : len(x)))
 max_len = 400
 
-train,test = train_test_split(train_data,test_size = 0.2)
+train,testn = train_test_split(train_data,test_size = 0.2)
+test = test_data
 
 X_train = train[["tweet"]]
 y_train = train[["status"]]
@@ -143,14 +158,12 @@ print("Vocab length:", vocab_length)
 print("Max sequence length:", max_len)
 
 embedding_dim = 16
-num_epochs = 5
+num_epochs = 10
 
 model = tf.keras.Sequential([
     tf.keras.layers.Embedding(vocab_length,embedding_dim,input_length = max_len),
     tf.keras.layers.LSTM(128,return_sequences = True),
     tf.keras.layers.GlobalAveragePooling1D(),
-    tf.keras.layers.Dropout(0.2),
-    tf.keras.layers.Dense(32,activation = 'relu'),
     tf.keras.layers.Dropout(0.2),
     tf.keras.layers.Dense(2,activation = 'softmax')
 ])
